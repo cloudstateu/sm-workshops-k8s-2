@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CosmosDB Data Viewer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #990000;
+            color: white;
+        }
+        table {
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            background-color: #0c83c8;
+        }
+        th, td {
+            border: 1px solid white;
+            padding: 8px 12px;
+        }
+        img.logo {
+            position: absolute;
+            bottom: 5px;
+            left: 5px;
+            height: 50px;
+            width: auto;
+        }
+    </style>
+</head>
+<body>
+    <h2>Last 2 Users</h2>
+    <table>
+        <tr>
+            <th>Email</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>City</th>
+            <th>Timestamp</th>
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.email }}</td>
+            <td>{{ user.first_name }}</td>
+            <td>{{ user.last_name }}</td>
+            <td>{{ user.city }}</td>
+            <td>{{ user.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Last 2 Activities</h2>
+    <table>
+        <tr>
+            <th>User Email</th>
+            <th>Website</th>
+            <th>Activity</th>
+            <th>Timestamp</th>
+        </tr>
+        {% for activity in activities %}
+        <tr>
+            <td>{{ activity.user_email }}</td>
+            <td>{{ activity.website }}</td>
+            <td>{{ activity.activity }}</td>
+            <td>{{ activity.timestamp }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

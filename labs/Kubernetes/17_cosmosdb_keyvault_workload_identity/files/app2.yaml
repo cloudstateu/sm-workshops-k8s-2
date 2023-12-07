@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+        - name: cosmoswebapp-container
+          image: danchmpis/cosmosapp2:1.0.0
+          ports:
+            - containerPort: 8095
+          envFrom:
+            - configMapRef:
+                name: cm-cosmosdb-config
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-app2
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8095
+  selector:
+    app: app2

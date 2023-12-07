@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app1
+  template:
+    metadata:
+      labels:
+        app: app1
+    spec:
+      containers:
+        - name: my-container
+          image: danchmpis/cosmosapp1:1.0.0
+          ports:
+            - containerPort: 80
+          env:
+            - name: CONNECTION_STRING
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-cosmosdb-config
+                  key: CONNECTION_STRING
+            - name: COSMOS_DATABASE_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-cosmosdb-config
+                  key: COSMOS_DATABASE_NAME
+            - name: USER_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-cosmosdb-config
+                  key: USER_COLLECTION_NAME
+            - name: ACTIVITY_COLLECTION_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: cm-cosmosdb-config
+                  key: ACTIVITY_COLLECTION_NAME

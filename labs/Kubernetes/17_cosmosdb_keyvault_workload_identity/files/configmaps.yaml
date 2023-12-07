@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cm-cosmosdb-config
+data:
+  CONNECTION_STRING: <CONNECTION_STRING>
+  COSMOS_DATABASE_NAME: <COSMOS_DATABASE_NAME>
+  USER_COLLECTION_NAME: "UserCollection"
+  ACTIVITY_COLLECTION_NAME: "ActivityCollection"

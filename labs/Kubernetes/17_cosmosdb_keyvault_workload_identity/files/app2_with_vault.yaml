@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2kv
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app2kv
+  template:
+    metadata:
+      labels:
+        app: app2kv
+    spec:
+      serviceAccountName: "sa-akv"
+      initContainers:
+        - name: check-secrets-loaded
+          image: busybox:1.28
+          command: ["/bin/sh", "-c"]
+          args:
+            [
+              "while [ ! -f /mnt/secrets/CONNECTION_STRING ] && [ ! -f /mnt/secrets/COSMOS_DATABASE_NAME ] && [ ! -f /mnt/secrets/USER_COLLECTION_NAME ] && [ ! -f /mnt/secrets/ACTIVITY_COLLECTION_NAME ]; do echo 'Waiting for secrets to be loaded...'; sleep 5; done; echo 'Secrets loaded!';",
+            ]
+          volumeMounts:
+            - name: secrets-store-inline
+              mountPath: "/mnt/secrets"
+              readOnly: true
+      containers:
+      - name: app2kv-container
+        image: danchmpis/cosmosapp2:1.0.0
+        ports:
+        - containerPort: 8095
+        envFrom:
+        - secretRef:
+            name: azure-keyvault-secrets
+      volumes:
+        - name: secrets-store-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: azure-kvname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-app2kv
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 8095
+  selector:
+    app: app2kv
