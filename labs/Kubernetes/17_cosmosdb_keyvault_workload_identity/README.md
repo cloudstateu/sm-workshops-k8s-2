@@ -235,7 +235,7 @@ Now we need to configure the Azure CSI driver.
 2. Apply the config: 
 
     ```bash
-    kubectl apply -f secret-provider.yaml
+    kubectl apply -f secret_provider.yaml
     ```
 
 ## Task 17: Apply app1kv to Kubernetes
