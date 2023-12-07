@@ -134,8 +134,8 @@ Create one more collection `ActivityCollection`:
     While creating a secret leave all other fields with default values
 
 ## Task 10: Create User Managed Identity
-1. In Azure portal navigate to User Managed Identity service - from Marketplace or searching section from Azure portal
-2. Search for **User Managed Identity** service, click **Create**
+1. In Azure portal navigate to Managed Identity service - from Marketplace or searching section from Azure portal
+2. Search for **Managed Identity** service, click **Create**
 3. Fill the form:
 
     - **Resource group:** use your own resource group
@@ -146,7 +146,7 @@ Create one more collection `ActivityCollection`:
 4. Go **Next** until the last blade. Leave all fields by default.
 5. Click **Create** and wait for the deployment to finish. Be sure to actually click "Create" after validation succeeded.
 
-## Task 10: Add access policy to Key Vault for User Managed Identity
+## Task 11: Add access policy to Key Vault for User Managed Identity
 1. Go to your Azure Key Vault service.
 2. Click **Access Policies** from left menu.
 3. Click **Add access policy**
@@ -155,7 +155,7 @@ Create one more collection `ActivityCollection`:
 6. Select your identity and click on **Select** button. Apply settings by clicking on **Add** button.
 7. Click on **Save** to persist your changes.
 
-## Task 11: Update the AKS cluster with OIDC Issuer 
+## Task 12: Update the AKS cluster with OIDC Issuer 
 Azure Workload Identity need OIDC Issuer configured in the AKS cluster. With your AKS cluster, you can enable OpenID Connect (OIDC) Issuer, which allows Azure Active Directory (Azure AD) or other cloud provider identity and access management platform, to discover the API server's public signing keys. Thanks to that your pod can use workload identity to access secrets in Azure Key Vault.
 1. Update AKS cluster:
 
@@ -171,7 +171,7 @@ Azure Workload Identity need OIDC Issuer configured in the AKS cluster. With you
 
     Copy the output of the command, because it will be used in the next Task.
 
-## Task 12 Create ServiceAccount object that will use user managed identity
+## Task 13 Create ServiceAccount object that will use user managed identity
 1. Open `serviceaccount.yaml` and add there your Client ID of your User Managed Idnetity that you will find in the Overview page of your cretaed User Managed Identity.
 2. Apply `serviceaccount.yaml` to your cluster:
        
@@ -179,7 +179,7 @@ Azure Workload Identity need OIDC Issuer configured in the AKS cluster. With you
     kubectl apply -f serviceaccount.yaml
     ```
 
-## Task 13 Add Federeted Credentials to your User Managed Identity for usage of Azure Workload Identity
+## Task 14 Add Federeted Credentials to your User Managed Identity for usage of Azure Workload Identity
 1. Go to created User Managed Idenity service and choose `Federated credentials` from left Menu.
 2. Click **Add Credentials** button.
 3. From the scenerio choose `Kubernetes accessing Azure resources`
@@ -193,7 +193,7 @@ Azure Workload Identity need OIDC Issuer configured in the AKS cluster. With you
 5. Click Add
 
 
-## Task 14: Install Azure CSI driver
+## Task 15: Install Azure CSI driver
 Now we are going install and Azure CSI driver.
 
 1. Create namespace for CSI
@@ -220,7 +220,7 @@ Now we are going install and Azure CSI driver.
     kubectl get pods -n csi
     ```
 
-## Task 15: Configure Secrets Provider
+## Task 16: Configure Secrets Provider
 
 Now we need to configure the Azure CSI driver. 
 
@@ -238,7 +238,7 @@ Now we need to configure the Azure CSI driver.
     kubectl apply -f secret-provider.yaml
     ```
 
-## Task 16: Apply app1kv to Kubernetes
+## Task 17: Apply app1kv to Kubernetes
 1. Create a deployment named **app1kv**
 
     ```bash
@@ -251,11 +251,11 @@ Now we need to configure the Azure CSI driver.
     kubectl get pods -l app=app1kv
     ```
 
-## Task 17 Check if the application **app1kv** is writing the data to the CosmosDB
+## Task 18 Check if the application **app1kv** is writing the data to the CosmosDB
 1. Go to your CosmosDB page and navigate to `Data Explorer`
 2. Go to your database and choose `UserCollection` or `ActivityCollection`. Check if in the **Documents** are data in the format JSON (you have to click on the selected row of documents).
 
-## Task 18: Apply app2kv to Kubernetes
+## Task 19: Apply app2kv to Kubernetes
 1. Create a deployment named **app2kv** and service (type: LoadBalancer)
 
     ```bash
@@ -277,7 +277,7 @@ Now we need to configure the Azure CSI driver.
 4. Using any browser of your choice, navigate to **EXTERNAL-IP of svc-app2kv** address. The output should display information (in the tables) about last two users and activities added to CosmosDB by **app1kv**.
 
 
-## Task 19: Delete resources created during this lab
+## Task 20: Delete resources created during this lab
 1. Delete Kubernetes resources
 
     ```bash
