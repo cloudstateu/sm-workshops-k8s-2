@@ -1,0 +1,23 @@
+apiVersion: "acid.zalan.do/v1"
+kind: postgresql
+metadata:
+  name: clouds-demo-cluster
+spec:
+  teamId: "clouds"
+  volume:
+    size: 1Gi
+  numberOfInstances: 2
+  users:
+    # database owner  [same as in databases section]
+    my_user:
+    - superuser
+    - createdb
+
+    # role for application foo
+    foo_user: []
+
+  #databases: name->owner
+  databases:
+    my_db_name: my_user # [same ase in users section, my_db_name - your db name]
+  postgresql:
+    version: "14"
